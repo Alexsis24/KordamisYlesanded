@@ -16,6 +16,7 @@
             //malelipu puhul ütle et "BUT WHY THO"
             //muu lipu puhul ütle et "ei tunne sellist riiki kahjuks :c"*/
 
+            
             string eestiLipp = "Kalevi poeg on uhke sinu üle!";
             string veneLipp = "Tervita babuskat!";
             string soomeLipp = "Ohh Soomelainen";
@@ -58,9 +59,6 @@
             {
                 Console.WriteLine(tundmatuLipp);
             }
-                     
-
-
 
 
             /* 2. - "Panga kasutajatuvastus" 
@@ -79,8 +77,108 @@
             //  kui ei, programm lõppeb
             // kui ei, programm lõppeb*/
 
+            //errori vastus
+            string errorNimi = "Sisestatud nimi ei saa olla tühi.";
+            string errorPW = "Sisestatud parool ei sobi. Paroolis on vaja vähemalt ";
 
+            //eesnime küsimine
+            Console.WriteLine("Sisetage eesnimi:");
+            string sisEesnimi = Console.ReadLine().Trim(); // sisestatud lühendus sis
+            string eesNimi = toCapEes(sisEesnimi);
+            if (sisEesnimi == "")
+            {
+                Console.WriteLine(errorNimi);
+            }
+            
 
+            //perekonnanime küsimine
+            Console.WriteLine("Sisetage perekonnanimi:");
+            string sisPerenimi = Console.ReadLine().Trim();
+            string pereNimi = toCapPere(sisPerenimi);
+            if (sisPerenimi == "")
+            {
+                Console.WriteLine(errorNimi);
+            }
+
+            // küsib parooli
+            Console.WriteLine("Sisestage parool:");
+            string pw = Console.ReadLine();
+
+            // kontrollib pikkust, vähemalt 8 tähte
+
+            if (pw.Length >= 8)
+            {
+                // otsib neid märke: ,.-_:;!?+
+                if (pw.Contains(",") 
+                    || pw.Contains(".") 
+                    || pw.Contains("-") 
+                    || pw.Contains("_")
+                    || pw.Contains(":")
+                    || pw.Contains(";")
+                    || pw.Contains("!")
+                    || pw.Contains("?")
+                    || pw.Contains("+"))
+                {                    
+                   //kõik kontrollid läbitud ja tervitus
+                    string terveNimi = TerveNimi(eesNimi, pereNimi);
+                    Console.WriteLine("Tere tulemast " + terveNimi + " olete sisse logitud");
+                }
+                else
+                {
+                    Console.WriteLine(errorPW + "ühte erilist märki nagu ,.-_:;!?+");
+                    return;
+                }
+            }
+            else
+            {
+                Console.WriteLine(errorPW + "8 tähte.");
+                return;
+            }              
+
+                
         }
+
+        //programm mis muudab esimesed tähed nimedes suure täheks
+        //kahjuks ei tööta mitme nimega kuna see liiga keeruline praegu
+        public static string toCapEes(string sisEesnimi)
+        {
+            //a1 on esimese tähe otsijaks ja a2 on ülejäänud tähed nimest
+            string a1;
+            string a2;
+
+            // otsib nimes esimese tähe ja muudab selle suureks
+            a1 = sisEesnimi.Substring(0, 1).ToUpper();
+
+            // muudab kõik peale esimese tähe väikseks
+            a2 = sisEesnimi.Substring(1).ToLower();
+
+            //paneb erineva suurusega tähed kokku
+            return a1+a2;
+        }
+
+        public static string toCapPere(string sisPerenimi)
+        {
+            //b1 on esimese tähe otsijaks ja b2 on ülejäänud tähed nimest
+            string b1;
+            string b2;
+
+            // esimene täht peab suur olema.
+            b1 = sisPerenimi.Substring(0, 1).ToUpper();
+
+            // teiste tähtede väikeseks tegemine
+            b2 = sisPerenimi.Substring(1).ToLower();
+
+            //paneb erineva suurusega tähed kokku
+            return b1 + b2;
+        }
+
+        public static string TerveNimi(string eesNimi, string pereNimi)
+        {
+            string terveNimi = pereNimi + ", " + eesNimi;
+            return terveNimi;
+        }
+
+
+
     }
 }
